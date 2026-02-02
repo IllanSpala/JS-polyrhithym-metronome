@@ -34,14 +34,11 @@ Since this is a static web project, you do not need to install complex dependenc
 
 Clone the repository:
 
-Bash
-
-git clone [https://github.com/IllanSpala/JS-polyrhithym-metronome.git](https://github.com/IllanSpala/JS-polyrhithym-metronome.git)
+git clone [https://github.com/IllanSpala/JS-polyrhithym-metronome.git]
+(https://github.com/IllanSpala/JS-polyrhithym-metronome.git)
 Navigate to the specific project folder: (Important: The project lives inside the PolyMetronome_jojozelan folder)
-
-Bash
-
 cd JS-polyrhithym-metronome/PolyMetronome_jojozelan
+
 Launch the App:
 
 Option A (Simplest): Locate index.html in your file explorer and double-click to open it in your browser.
