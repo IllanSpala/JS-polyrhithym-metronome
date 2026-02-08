@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POLY METRONOME</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="../css/metronome.css">
+    
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../js/script.js" defer></script>
+    <script src="../js/metronome.js" defer></script>
+
+</head>
+<body>
+    
+    <div class="theme-sidebar">
+
+        <a href="index.html" class="back-btn" title="Back to Main Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        </a>
+    
+        <div class="sidebar-divider"></div>
+
+        <div class="theme-btn" onclick="changeTheme(0)" style="background-color: #af8c62;" title="Teak/Earth"></div>
+        <div class="theme-btn" onclick="changeTheme(1)" style="background-color: #c0bab3;" title="Winter/Dove"></div>
+        <div class="theme-btn" onclick="changeTheme(2)" style="background-color: #192a34;" title="Pine/Forest"></div>
+        <div class="theme-btn" onclick="changeTheme(3)" style="background-color: #3a3e6c;" title="Royal Purple"></div>
+    </div>
+    
+    <header class="glass-header">
+        <div class="logo">JOJOZELAN TOOLS</div>
+        <nav>
+            <a class="github-link" href="https://github.com/IllanSpala" target="_blank" style="color: white; text-decoration: none; font-size: 1.2rem;">
+                <i class="fab fa-github"></i>
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container metronome-card">
+            <h1 class="glow-text">Polyrhythm Metronome</h1>
+
+            <div class="visual-container">
+                <svg id="poly-svg" width="280" height="280" viewBox="0 0 400 400"></svg>
+            </div>
+
+            <div class="controls-grid">
+                <div class="input-group">
+                    <input type="number" id="beat-a" value="3" min="1" max="20" required placeholder=" ">
+                    <label for="beat-a">MainBeat</label>
+                    <div class="bar"></div>
+                </div>
+
+                <div class="input-group">
+                    <input type="number" id="beat-b" value="4" min="1" max="20" required placeholder=" ">
+                    <label for="beat-b">SubBeat</label>
+                    <div class="bar"></div>
+                </div>
+                
+                <div class="input-group">
+                    <input type="number" id="bpm" value="120" min="20" max="300" required placeholder=" ">
+                    <label for="bpm">BPM</label>
+                    <div class="bar"></div>
+                </div>
+            </div>
+
+            <button id="play-btn" class="glass-btn">START</button>
+        </div>
+    </main>
+
+    
+    <footer class="glass-footer">
+        <div class="footer-content">
+            <p>© 2026 jojozelan Tools</p>
+        </div>
+    </footer>
+
+</body>
+</html>

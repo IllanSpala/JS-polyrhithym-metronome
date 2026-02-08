@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jojozelan Tools - Main Menu</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/menu.css">
+    
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
+    <script src="../js/script.js" defer></script>
+</head>
+<body>
+    
+    <div class="theme-sidebar">
+        <div class="theme-btn" onclick="changeTheme(0)" style="background-color: #af8c62;" title="Teak/Earth"></div>
+        <div class="theme-btn" onclick="changeTheme(1)" style="background-color: #c0bab3;" title="Winter/Dove"></div>
+        <div class="theme-btn" onclick="changeTheme(2)" style="background-color: #192a34;" title="Pine/Forest"></div>
+        <div class="theme-btn" onclick="changeTheme(3)" style="background-color: #3a3e6c;" title="Royal Purple"></div>
+    </div>
+    
+    <header class="glass-header">
+        <div class="logo">JOJOZELAN TOOLS</div>
+        <nav>
+            <a class="github-link" href="https://github.com/IllanSpala" target="_blank" style="color: white; text-decoration: none; font-size: 1.2rem;">
+                <i class="fab fa-github"></i>
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="glow-text" style="margin-bottom: 40px; font-size: 2.5rem;">Select a Tool</h1>
+
+            <div class="tools-grid">
+                
+                <div class="tool-card">
+                    <div class="icon-box">
+                        <i class="fas fa-drum"></i>
+                    </div>
+                    <h2>Metronome</h2>
+                    <p>Visual polyrhythmic generator with customizable beats.</p>
+                    <a href="PolyMetro.html" class="glass-btn small-btn">OPEN TOOL</a>
+                </div>
+
+                <div class="tool-card disabled">
+                    <div class="icon-box">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h2>Scale Machine</h2>
+                    <p>Random scale generator and visualizer.</p>
+                    <button class="glass-btn small-btn" disabled style="opacity: 0.5; cursor: not-allowed;">COMING SOON</button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="glass-footer">
+        <div class="footer-content">
+            <p>© 2026 jojozelan Tools</p>
+        </div>
+    </footer>
+
+</body>
+</html>
