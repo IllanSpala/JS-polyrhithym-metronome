@@ -1,14 +1,16 @@
-# JS-musicalHelper (jojozelan Tools)
+JS-musicalHelper (jojozelan Tools)
+About the Project
 
-## About the Project
-JS-musicalHelper is a web-based, multi-tool platform designed to assist musicians in the production, study, and creation of music. The fundamental concept of this website is to consolidate various musical utilities into a single, cohesive, and interactive environment. Whether you are practicing complex rhythms, studying music theory, or mapping out scales on a fretboard, this platform provides the necessary visual and audio tools to enhance your musical workflow.
+JS-musicalHelper is a web-based, multi-tool platform designed to assist musicians in the production, study, and creation of music. The fundamental concept of this website is to consolidate various musical utilities into a single, cohesive, and interactive environment.
+
+Whether you are practicing complex rhythms, studying music theory, or mapping out scales on a fretboard, this platform provides the necessary visual and audio tools to enhance your musical workflow.
 
 The application is built using vanilla HTML, CSS, and JavaScript, making it lightweight and easy to run directly in any modern web browser without the need for complex backend setups or installations.
 
-## Project Architecture & Roadmap
+Project Architecture & Roadmap
+
 Below is the structural map of the project, highlighting the existing core modules and the planned roadmap for future features (such as the Tablature Player and User Authentication).
 
-```mermaid
 graph TD
     %% Styling
     classDef main fill:#e0e0e0,stroke:#333,stroke-width:1px;
@@ -17,97 +19,216 @@ graph TD
     classDef planned fill:#f5e6d3,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5;
     classDef backend fill:#f5d3d3,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5;
 
-    %% Level 1: Hub
-    Index["index.html<br><small>Main menu · theme switcher</small>"]:::main
+    %% Hub
+    Index["index.html\nMain menu - theme switcher"]:::main
 
-    %% Level 2: Core Files
-    MenuCSS["menu.css<br><small>Layout · flat ui · temas</small>"]:::core
-    ScriptJS["script.js<br><small>Temas persistentes · i18n</small>"]:::core
+    %% Core files
+    MenuCSS["menu.css\nLayout - flat UI - themes"]:::core
+    ScriptJS["script.js\nThemes - i18n"]:::core
     Index -.-> MenuCSS
     Index -.-> ScriptJS
 
-    %% Level 3: Existing Tools
-    PolyMetro["PolyMetro.html<br><small>Metrônomo polirrítmico</small>"]:::existing
-    ScaleMachine["ScaleMachine.html<br><small>Escalas · fretboard · prática</small>"]:::existing
+    %% Existing tools
+    PolyMetro["PolyMetro.html\nPolyrhythm metronome"]:::existing
+    ScaleMachine["ScaleMachine.html\nScales - fretboard - practice"]:::existing
     Index --> PolyMetro
     Index --> ScaleMachine
     PolyMetro -.-> ScriptJS
     ScaleMachine -.-> ScriptJS
 
-    %% Level 4: Planned Modules (Roadmap)
-    TabPlayer["TabPlayer.html (Planned)<br><small>Leitor AlphaTab · Loop</small>"]:::planned
-    UserArea["Profile.html (Planned)<br><small>Painel do Usuário</small>"]:::planned
-    FirebaseDB[("BaaS Cloud (Planned)<br><small>Auth · User DB</small>")]:::backend
+    %% Planned modules
+    TabPlayer["TabPlayer.html (Planned)\nAlphaTab player - looping"]:::planned
+    UserArea["Profile.html (Planned)\nUser dashboard"]:::planned
+    FirebaseDB[("BaaS Cloud (Planned)\nAuth - User database")]:::backend
 
     Index -.-> TabPlayer
     Index -.-> UserArea
-    TabPlayer -.->|Saves Progress| FirebaseDB
+    TabPlayer -.->|Saves progress| FirebaseDB
     UserArea -.->|Login / Sync| FirebaseDB
-
-    Features and Modules
+Features and Modules
 1. Main Menu (Hub)
+
 The landing page serves as the central hub connecting all available tools.
 
-Customization: It features a persistent theme selector with four distinct color palettes (Teak/Earth, Winter/Dove, Pine/Forest, Royal Purple) that carry over to all tools.
+Customization
 
-Localization: Includes an i18n language toggle, allowing users to switch the entire application interface between English and Portuguese seamlessly.
+Persistent theme selector with four distinct color palettes:
+
+Teak / Earth
+
+Winter / Dove
+
+Pine / Forest
+
+Royal Purple
+
+Themes are shared across all tools and saved locally.
+
+Localization
+
+Built-in i18n toggle allowing seamless switching between:
+
+English
+
+Portuguese
 
 2. Polyrhythm Metronome
-A specialized metronome designed to help musicians visualize and practice complex polyrhythms (e.g., 3 against 4, 5 against 7).
 
-Visual Generator: Uses dynamic SVG geometry to draw shapes representing the beats. Dots move along the edges of the polygons to provide precise visual cues.
+A specialized metronome designed to help musicians visualize and practice complex polyrhythms such as 3:4, 5:7, etc.
 
-Audio Engine: Utilizes the Web Audio API to play distinct tones for the Main Beat and the Sub Beat.
+Visual Generator
 
-Customizable Inputs: Users can easily adjust the primary beat, secondary beat, and the global BPM.
+Uses dynamic SVG geometry to draw polygons representing rhythmic subdivisions.
+
+Animated dots move along the shapes to provide visual timing cues.
+
+Audio Engine
+
+Built on the Web Audio API
+
+Separate tones for:
+
+Main beat
+
+Subdivision beat
+
+Controls
+
+Adjustable:
+
+Primary beat
+
+Secondary beat
+
+Global BPM
 
 3. Scale Machine
-An advanced, interactive fretboard visualizer and music theory study tool tailored for guitar and bass players.
 
-Dynamic Fretboard: Generates a fully interactive fretboard. Users can click on any note to hear its pitch.
+An advanced, interactive fretboard visualizer and music theory study tool designed primarily for guitar and bass players.
 
-Extensive Customization: Allows selection of instrument (Guitar or Bass), root note, specific scales/modes (Ionian, Dorian, Harmonic Minor, Whole Tone, etc.), and fret count.
+Dynamic Fretboard
 
-Tunings: Supports multiple standard and alternate tunings (Drop D, Open G, DADGAD), plus a Custom Tuning editor to modify each string individually.
+Generates a clickable fretboard in real time.
 
-Music Theory Integration: Displays the scale formula with exact intervals and provides a dedicated "About Scale" panel with detailed theoretical context for the selected scale.
+Clicking any note plays its pitch.
 
-Practice Mode: A built-in study overlay with four interactive mini-games to help memorize the fretboard:
+Customization
+Users can configure:
 
-Complete the Formula: Fill in the missing notes using intervals as a guide.
+Instrument: Guitar or Bass
 
-Degree to Note: Given a scale degree, identify the correct note.
+Root note
 
-Note to Degree: Given a note, identify its harmonic function.
+Scale / mode:
 
-Listen and Identify: Ear training exercise to identify a note's degree by sound.
+Ionian
 
-CHUG Button: A dedicated feature for metal musicians that instantly triggers a low-tuned palm-mute sound based on the instrument's lowest string.
+Dorian
+
+Harmonic Minor
+
+Whole Tone
+
+and many more
+
+Number of frets
+
+Tuning Support
+Includes:
+
+Standard tunings
+
+Drop tunings
+
+Open tunings
+
+Fully custom per-string tuning editor
+
+Music Theory Integration
+Displays:
+
+Scale interval formulas
+
+Harmonic degrees
+
+Contextual theory explanations in an About Scale panel
+
+4. Practice Mode (Scale Machine)
+
+Includes four interactive training mini-games:
+
+Complete the Formula
+
+Fill in missing notes based on interval patterns.
+
+Degree to Note
+
+Given a scale degree, select the correct note on the fretboard.
+
+Note to Degree
+
+Identify the harmonic function of a note within the scale.
+
+Listen and Identify
+
+Ear-training exercise for recognizing degrees by sound.
+
+5. CHUG Button
+
+A dedicated feature aimed at metal musicians.
+
+Instantly plays a low-tuned palm-mute sample
+
+Uses the currently selected instrument tuning to determine pitch
 
 Directory Structure
-The repository is organized as follows:
-
-Plaintext
 JS-musicalHelper/
-├── index.html              # Root redirect file that points to the main source folder
+├── index.html              # Root redirect file
 ├── src/                    # Main HTML interfaces
-│   ├── index.html          # Main Menu interface
-│   ├── PolyMetro.html      # Polyrhythm Metronome tool interface
-│   └── ScaleMachine.html   # Scale Machine tool interface
-├── css/                    # Stylesheets
-│   ├── menu.css            # Global layout, typography, and Main Menu styling
-│   ├── metronome.css       # Specific styles for the Polyrhythm Metronome
-│   └── scale.css           # Specific styles for the Scale Machine and Fretboard
-├── js/                     # Core JavaScript logic
-│   ├── script.js           # Global logic, theme management, and translation system (i18n)
-│   ├── metronome.js        # Audio scheduling, geometry drawing, and metronome controls
-│   └── scale.js            # Fretboard generation, music theory dictionaries, and practice mode logic
-└── pic ideas/              # Concept art, color palettes, and reference images
+│   ├── index.html          # Main Menu
+│   ├── PolyMetro.html      # Polyrhythm Metronome
+│   └── ScaleMachine.html   # Scale Machine
+├── css/
+│   ├── menu.css            # Global layout and menu styling
+│   ├── metronome.css       # Metronome styles
+│   └── scale.css           # Fretboard and scale styles
+├── js/
+│   ├── script.js           # Global logic, themes, i18n
+│   ├── metronome.js        # Metronome engine
+│   └── scale.js            # Fretboard and theory logic
+└── pic ideas/              # Concept art and references
 How to Run
-Since this project consists of static files, no build process or package manager is required.
 
-Clone the repository to your local machine.
+This project is entirely static and requires no build step.
 
-Navigate to the project folder.
+Steps
 
-Open the index.html file in the root directory with any modern web browser to start using the tools.
+Clone the repository:
+
+git clone https://github.com/your-username/JS-musicalHelper.git
+
+Navigate to the folder:
+
+cd JS-musicalHelper
+
+Open:
+
+index.html
+
+in any modern browser.
+
+Roadmap
+
+Planned future modules include:
+
+Tablature Player
+
+AlphaTab integration
+
+Looping and tempo control
+
+User Accounts
+
+Progress saving
+
+Cloud sync via Firebase
