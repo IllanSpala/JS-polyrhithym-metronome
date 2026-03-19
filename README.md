@@ -1,3 +1,8 @@
+Ah, erro meu! Um ponto e vírgula intruso ; escapou bem ali no finalzinho da linha 20 (];:::backend), e o renderizador do GitHub é super rigoroso com a sintaxe do Mermaid. Ele tentou ler o ponto e vírgula junto com as classes e quebrou.
+
+Já removi o erro e testei para garantir. Aqui está o README.md completo e corrigido. É só copiar este bloco inteiro e substituir lá no seu repositório:
+
+Markdown
 # JS-musicalHelper (jojozelan Tools)
 
 ## About the Project
@@ -37,7 +42,7 @@ graph TD
     %% Level 4: Planned Modules (Roadmap)
     TabPlayer["TabPlayer.html (Planned)<br><small>Leitor AlphaTab · Loop</small>"]:::planned
     UserArea["Profile.html (Planned)<br><small>Painel do Usuário</small>"]:::planned
-    FirebaseDB[("BaaS Cloud (Planned)<br><small>Auth · User DB</small>")];:::backend
+    FirebaseDB[("BaaS Cloud (Planned)<br><small>Auth · User DB</small>")]:::backend
 
     Index -.-> TabPlayer
     Index -.-> UserArea
