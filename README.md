@@ -55,9 +55,12 @@ How to Run
 Since this project consists of static files, no build process or package manager is required.
 
 Clone the repository to your local machine.
+Navigate to the project folder.
+Open the index.html file in the root directory with any modern web browser to start using the tools.
+
 
 COMING SOON
-mermaid
+mermaid`
 graph TD
     %% Cores dos nós
     classDef main fill:#e0e0e0,stroke:#333,stroke-width:1px;
@@ -127,8 +130,6 @@ graph TD
     FirebaseDB[("BaaS Cloud<br><small>Auth · DB Progresso</small>")];:::newBackend
     AuthJS -.->|API Call| FirebaseDB
     TabJS -.->|Salva Progresso| FirebaseDB
-)
+`  )
 
-Navigate to the project folder.
 
-Open the index.html file in the root directory with any modern web browser to start using the tools.
