@@ -56,6 +56,79 @@ Since this project consists of static files, no build process or package manager
 
 Clone the repository to your local machine.
 
+COMING SOON
+mermaid
+graph TD
+    %% Cores dos nós
+    classDef main fill:#e0e0e0,stroke:#333,stroke-width:1px;
+    classDef existing fill:#d6d6f5,stroke:#333,stroke-width:1px;
+    classDef core fill:#d9ebd8,stroke:#333,stroke-width:1px;
+    classDef newModule fill:#f5e6d3,stroke:#333,stroke-width:1px;
+    classDef newBackend fill:#f5d3d3,stroke:#333,stroke-width:1px;
+
+    %% Nível 1: Ponto de entrada
+    Index["index.html<br><small>Main menu · theme switcher</small>"]:::main
+
+    %% Nível 2: Arquivos Core/Compartilhados
+    MenuCSS["menu.css<br><small>Layout · flat ui · temas</small>"]:::core
+    ScriptJS["script.js<br><small>Temas persistentes · i18n</small>"]:::core
+
+    %% Conexões Nível 1 -> Nível 2
+    Index -.-> MenuCSS
+    Index -.-> ScriptJS
+
+    %% Nível 3: Módulos de Ferramentas (Já Existentes)
+    PolyMetro["PolyMetro.html<br><small>Metrônomo polirrítmico</small>"]:::existing
+    ScaleMachine["ScaleMachine.html<br><small>Escalas · fretboard · prática</small>"]:::existing
+
+    %% Conexões do Index para as ferramentas
+    Index --> PolyMetro
+    Index --> ScaleMachine
+
+    %% Dependências do PolyMetro
+    PolyCSS["metronome.css<br><small>Estilo exclusivo</small>"]:::existing
+    PolyJS["metronome.js<br><small>Web Audio + SVG corrigido</small>"]:::existing
+    PolyMetro --> PolyCSS
+    PolyMetro --> PolyJS
+    PolyMetro -.-> ScriptJS
+
+    %% Dependências do ScaleMachine
+    ScaleCSS["scale.css<br><small>Estilo exclusivo · contraste ajustado</small>"]:::existing
+    ScaleJS["scale.js<br><small>Lógica de escalas</small>"]:::existing
+    ScaleMachine --> ScaleCSS
+    ScaleMachine --> ScaleJS
+    ScaleMachine -.-> ScriptJS
+
+    %% ==========================================
+    %% NOVO CAMINHO A SER TRAÇADO (Módulos Novos)
+    %% ==========================================
+
+    %% 1. Leitor de Tablaturas
+    TabPlayer["TabPlayer.html<br><small>Leitor GP · Loop · Transpose</small>"]:::newModule
+    Index --> TabPlayer
+    
+    TabCSS["tabplayer.css<br><small>Estilo exclusivo do leitor</small>"]:::newModule
+    TabJS["tabplayer.js<br><small>Controles · AlphaTab API</small>"]:::newModule
+    TabPlayer --> TabCSS
+    TabPlayer --> TabJS
+    TabPlayer -.-> ScriptJS
+
+    %% 2. Módulo de Usuário e Autenticação
+    UserArea["Profile.html<br><small>Painel do Usuário · Setup</small>"]:::newModule
+    Index --> UserArea
+
+    ProfileCSS["profile.css<br><small>Estilo do painel</small>"]:::newModule
+    AuthJS["auth.js<br><small>Lógica de Login/Logout</small>"]:::newModule
+    UserArea --> ProfileCSS
+    UserArea --> AuthJS
+    UserArea -.-> ScriptJS
+
+    %% 3. Camada de Dados / Backend (Firebase/Supabase)
+    FirebaseDB[("BaaS Cloud<br><small>Auth · DB Progresso</small>")];:::newBackend
+    AuthJS -.->|API Call| FirebaseDB
+    TabJS -.->|Salva Progresso| FirebaseDB
+)
+
 Navigate to the project folder.
 
 Open the index.html file in the root directory with any modern web browser to start using the tools.
