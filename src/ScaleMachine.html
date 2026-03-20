@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scale Machine — jojozelan Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="../css/scale.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../js/script.js" defer></script>
+    <script src="../js/scale.js" defer></script>
+</head>
+<body class="scale-page">
+    <div class="theme-sidebar">
+        <a href="index.html" class="back-btn" data-i18n-title="back_menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        </a>
+        <div class="sidebar-divider"></div>
+        <div class="theme-btn" onclick="changeTheme(0)" style="background-color: #af8c62;" title="Teak/Earth"></div>
+        <div class="theme-btn" onclick="changeTheme(1)" style="background-color: #c0bab3;" title="Winter/Dove"></div>
+        <div class="theme-btn" onclick="changeTheme(2)" style="background-color: #192a34;" title="Pine/Forest"></div>
+        <div class="theme-btn" onclick="changeTheme(3)" style="background-color: #3a3e6c;" title="Royal Purple"></div>
+    </div>
+
+    <header class="glass-header">
+        <div class="logo">JOJOZELAN TOOLS</div>
+        <nav><a href="https://github.com/IllanSpala" target="_blank" style="color:white;text-decoration:none;font-size:1.2rem;"><i class="fab fa-github"></i></a></nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="glow-text" data-i18n="scale_title">Máquina de Escalas</h1>
+            <div class="controls-bar">
+                <div class="control-group">
+                    <label data-i18n="lbl_instrument">Instrumento</label>
+                    <div class="instrument-toggle">
+                        <button class="instrument-btn active" data-instrument="guitar">Guitar</button>
+                        <button class="instrument-btn" data-instrument="bass">Bass</button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label data-i18n="lbl_root">Tônica</label>
+                    <select id="root-select"></select>
+                </div>
+                <div class="control-group">
+                    <label data-i18n="lbl_scale">Escala</label>
+                    <select id="scale-select"></select>
+                </div>
+                <div class="control-group">
+                    <label data-i18n="lbl_tuning">Afinação</label>
+                    <select id="tuning-select"></select>
+                </div>
+                <div class="control-group">
+                    <label data-i18n="lbl_frets">Trastes</label>
+                    <div class="fret-range-group">
+                        <input type="range" id="fret-count" min="10" max="24" value="22">
+                        <span id="fret-count-label">22</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="legend-section">
+                <span class="section-label" data-i18n="legend_title">Notas da escala — clique para detalhes e som</span>
+                <div id="scale-legend"></div>
+            </div>
+
+            <div id="fretboard-scroll"><div id="fretboard"></div></div>
+
+            <!-- Formula section: fills the empty space between fretboard and bottom row -->
+            <div class="formula-section">
+                <span id="formula-section-label" class="section-label">Fórmula da escala</span>
+                <div id="scale-formula"></div>
+                <button id="practice-btn"> Praticar Escala</button>
+            </div>
+
+            <div class="bottom-row">
+                <div class="custom-tuning-section">
+                    <span class="section-label" data-i18n="custom_tuning_title">Afinação personalizada</span>
+                    <div id="custom-tuning"></div>
+                </div>
+                <div class="actions-area">
+                    <button id="scale-info-btn" data-i18n="btn_about">Sobre a Escala</button>
+                    <button id="chug-btn">
+                        CHUG <span id="chug-label">7ª corda B</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Practice overlay (centered modal with translucent backdrop) -->
+            <div id="practice-overlay" class="prac-overlay hidden">
+                <div class="prac-modal">
+                    <!-- Header -->
+                    <div class="prac-header">
+                        <span>🎯</span>
+                        <span id="prac-title" class="prac-title-text"></span>
+                        <button id="prac-close-btn" class="prac-close">✕</button>
+                    </div>
+
+                    <!-- Mode tabs -->
+                    <div class="prac-mode-tabs">
+                        <button class="prac-mode-tab active" data-mode="complete"> Complete</button>
+                        <button class="prac-mode-tab" data-mode="degree"> Grau → Nota</button>
+                        <button class="prac-mode-tab" data-mode="note"> Nota → Grau</button>
+                        <button class="prac-mode-tab" data-mode="listen"> Ouça</button>
+                    </div>
+
+                    <!-- Exercise content -->
+                    <div id="prac-exercise-wrap" class="prac-exercise-area"></div>
+
+                    <!-- Footer: result + buttons -->
+                    <div class="prac-footer">
+                        <div id="prac-result" class="prac-result"></div>
+                        <div class="prac-actions">
+                            <button id="prac-verify-btn" class="prac-action-btn verify">Verificar</button>
+                            <button id="prac-new-btn" class="prac-action-btn new-btn">Nova Escala</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="scale-info-panel" class="bottom-panel"></div>
+        </div>
+    </main>
+
+    <footer class="glass-footer">
+        <div class="footer-content">
+            <p data-i18n="footer_text">© 2026 jojozelan Tools</p>
+            <div class="lang-selector">
+                <img src="https://flagcdn.com/w40/br.png" alt="PT-BR" onclick="setLanguage('pt')" class="lang-flag" id="flag-pt" title="Português">
+                <img src="https://flagcdn.com/w40/gb.png" alt="EN" onclick="setLanguage('en')" class="lang-flag" id="flag-en" title="English">
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

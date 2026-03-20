@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab Player — jojozelan Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="../css/tab-player.css">
+    <!--
+        AlphaTab MUST load synchronously in <head>.
+        The internal web-worker resolves its own URL from this same <script> tag.
+        Do NOT load it with defer/async or dynamically.
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/@coderline/alphatab@1.3.0/dist/alphaTab.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../js/script.js" defer></script>
+    <script src="../js/tab-player.js" defer></script>
+</head>
+<body class="tab-page">
+
+<!-- ═══════════════════ HEADER ═══════════════════════════════ -->
+<header class="tp-header">
+    <div class="tp-header-l">
+        <a href="index.html" class="tp-back" title="Menu">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"/>
+                <polyline points="12 19 5 12 12 5"/>
+            </svg>
+        </a>
+        <span class="tp-logo">JOJOZELAN TOOLS</span>
+    </div>
+
+    <!-- TRUE center — absolutely positioned so it never gets pushed -->
+    <div class="tp-header-c">
+        <span id="hdr-title" class="hdr-title">— TAB PLAYER —</span>
+    </div>
+
+    <div class="tp-header-r">
+        <a href="https://github.com/IllanSpala" target="_blank" class="tp-gh">
+            <i class="fab fa-github"></i>
+        </a>
+    </div>
+</header>
+
+<!-- ═══════════════════ MAIN BODY ════════════════════════════ -->
+<div class="tp-body">
+
+    <!-- UPLOAD DROP ZONE (shown before file load) -->
+    <div id="upload-zone" class="upload-zone">
+        <label class="upload-card" for="file-input">
+            <span class="upload-icon">🎸</span>
+            <h2 class="upload-title">Tab Player</h2>
+            <p class="upload-sub">Arraste ou clique para abrir um arquivo Guitar Pro</p>
+            <p class="upload-hint">.gp &nbsp;·&nbsp; .gp3 &nbsp;·&nbsp; .gp4 &nbsp;·&nbsp; .gp5 &nbsp;·&nbsp; .gpx</p>
+            <span class="upload-cta glass-btn">
+                <i class="fas fa-folder-open"></i>&nbsp; Escolher arquivo
+            </span>
+        </label>
+        <input type="file" id="file-input"
+               accept=".gp,.gp3,.gp4,.gp5,.gpx,.gp6" hidden>
+    </div>
+
+    <!-- ALPHATAB VIEWER (shown after load) -->
+    <div id="at-viewport" class="at-viewport tp-hidden">
+        <div id="at-element"></div>
+
+        <!-- Render/load overlay (inside viewport is fine — it's also fixed) -->
+        <div id="at-overlay" class="at-overlay">
+            <div class="at-spinner"></div>
+            <span id="at-overlay-msg">Carregando…</span>
+        </div>
+    </div>
+
+    <!-- Count-in overlay: OUTSIDE the scrollable viewport so position:fixed
+         covers exactly what is visible on screen regardless of scroll position -->
+    <div id="count-overlay" class="count-overlay tp-hidden">
+        <span id="count-num" class="count-num"></span>
+    </div>
+
+    <!-- ════════════ CONTROL BAR ══════════════════════════════ -->
+    <div id="ctrl-bar" class="ctrl-bar tp-hidden">
+
+        <!-- ── ROW 1 : Transport + BPM + Loop + Metro + Mode ── -->
+        <div class="ctrl-row r1">
+
+            <!-- Transport -->
+            <div class="cg">
+                <button id="btn-stop" class="cb" title="Stop">
+                    <i class="fas fa-stop"></i>
+                </button>
+                <button id="btn-play" class="cb cb-play" title="Play / Pausa">
+                    <i class="fas fa-play"></i>
+                </button>
+                <span id="tp-pos" class="tp-pos">0:00</span>
+            </div>
+
+            <div class="cs"></div>
+
+            <!-- Count-in -->
+            <div class="cg">
+                <span class="clbl">CONTAGEM</span>
+                <button id="btn-cin" class="cb" title="Contar antes de tocar">
+                    <i class="fas fa-hourglass-start"></i>
+                </button>
+            </div>
+
+            <div class="cs"></div>
+
+            <!-- BPM / Speed (linked) -->
+            <div class="cg cg-bpm">
+                <span class="clbl">ANDAMENTO</span>
+                <input type="range" id="speed-sl" class="speed-sl" min="25" max="200" value="100">
+                <div class="bpm-box">
+                    <span id="bpm-val" class="bpm-val">—</span>
+                    <span class="bpm-unit">BPM</span>
+                </div>
+                <span id="speed-pct" class="speed-pct">100%</span>
+            </div>
+
+            <div class="cs"></div>
+
+            <!-- Loop -->
+            <div class="cg">
+                <span class="clbl">LOOP</span>
+                <button id="btn-loop" class="cb" title="Loop on/off">
+                    <i class="fas fa-redo-alt"></i>
+                </button>
+                <button id="btn-loop-sel" class="cb" title="Definir região">
+                    <i class="fas fa-object-group"></i>
+                </button>
+                <span id="loop-lbl" class="loop-lbl tp-hidden"></span>
+                <button id="btn-loop-clr" class="ct loop-lbl tp-hidden" title="Limpar loop">✕</button>
+            </div>
+
+            <div class="cs"></div>
+
+            <!-- Metronome + its own volume -->
+            <div class="cg">
+                <span class="clbl">METRÔNOMO</span>
+                <button id="btn-metro" class="cb" title="Metrônomo on/off">
+                    <i class="fas fa-drum"></i>
+                </button>
+                <div id="metro-dots" class="metro-dots"></div>
+                <input type="range" id="metro-vol" class="metro-vol-sl"
+                       min="0" max="100" value="70" title="Volume do metrônomo">
+                <i class="fas fa-volume-up metro-vol-icon"></i>
+            </div>
+
+            <div class="cs"></div>
+
+            <!-- View mode: TAB or SCORE -->
+            <div class="cg">
+                <span class="clbl">MODO</span>
+                <div class="vtoggle">
+                    <button class="vb active" data-mode="tab">TAB</button>
+                    <button class="vb" data-mode="score">SCORE</button>
+                </div>
+            </div>
+
+            <!-- push load-file to far right -->
+            <div style="flex:1"></div>
+
+            <div class="cg">
+                <label class="cb" title="Abrir novo arquivo" style="cursor:pointer">
+                    <i class="fas fa-folder-open"></i>
+                    <input type="file" id="file-input-2"
+                           accept=".gp,.gp3,.gp4,.gp5,.gpx,.gp6" hidden>
+                </label>
+            </div>
+
+        </div><!-- /r1 -->
+
+        <!-- Visual divider between rows -->
+        <div class="row-divider"></div>
+
+        <!-- ── ROW 2 : Track selector only ────────────────── -->
+        <div class="ctrl-row r2">
+            <span class="clbl" style="flex-shrink:0;padding-right:10px;
+                border-right:1px solid rgba(255,255,255,0.07);margin-right:10px;">
+                TRACKS
+            </span>
+
+            <!-- Single button → popover above -->
+            <div class="tsel-wrap">
+                <button id="btn-tsel" class="tsel-btn">
+                    <span id="tsel-icon" class="tsel-icon">🎵</span>
+                    <span id="tsel-name">Todos os instrumentos</span>
+                    <i class="fas fa-chevron-up tsel-arrow" id="tsel-arr"></i>
+                </button>
+
+                <!-- Popover rises above ctrl-bar -->
+                <div id="tpop" class="tpop tp-hidden">
+                    <div class="tpop-head">
+                        <span class="clbl">SELECIONAR TRACK</span>
+                        <button id="btn-tall" class="tpop-all-btn">Todas</button>
+                    </div>
+                    <div id="tpop-list" class="tpop-list"></div>
+                </div>
+            </div>
+        </div><!-- /r2 -->
+
+    </div><!-- /ctrl-bar -->
+
+</div><!-- /tp-body -->
+
+<!-- ═══════════════════ FOOTER ═══════════════════════════════ -->
+<footer class="tp-footer">
+    <div class="tp-footer-inner">
+        <span class="tp-footer-copy" data-i18n="footer_text">© 2026 jojozelan Tools</span>
+
+        <!-- Theme dots live here -->
+        <div class="footer-themes">
+            <button class="ft-btn" onclick="changeTheme(0)" style="background:#af8c62" title="Teak"></button>
+            <button class="ft-btn" onclick="changeTheme(1)" style="background:#c0bab3" title="Dove"></button>
+            <button class="ft-btn" onclick="changeTheme(2)" style="background:#192a34" title="Forest"></button>
+            <button class="ft-btn" onclick="changeTheme(3)" style="background:#3a3e6c" title="Royal"></button>
+        </div>
+
+        <div class="lang-selector">
+            <img src="https://flagcdn.com/w40/br.png" alt="PT"
+                 onclick="setLanguage('pt')" class="lang-flag" id="flag-pt" title="Português">
+            <img src="https://flagcdn.com/w40/gb.png" alt="EN"
+                 onclick="setLanguage('en')" class="lang-flag" id="flag-en" title="English">
+        </div>
+    </div>
+</footer>
+
+<!-- Floating loop-select hint -->
+<div id="loop-hint" class="loop-hint tp-hidden">
+    <i class="fas fa-object-group"></i>
+    <span id="loop-hint-txt">Clique no compasso INICIAL do loop</span>
+    <kbd>Esc</kbd> para cancelar
+</div>
+
+</body>
+</html>
