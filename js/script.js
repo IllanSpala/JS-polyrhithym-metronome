@@ -15,27 +15,18 @@ function changeTheme(index) {
     root.style.setProperty('--btn-bg', t.btnBg);
     root.style.setProperty('--accent-a', t.accentA);
     root.style.setProperty('--accent-b', t.accentB);
-<<<<<<< HEAD
-    localStorage.setItem('appTheme', index);
-=======
     
     // Salva a escolha do usuário no navegador
     localStorage.setItem('appTheme', index);
 
     // Sincroniza com a página de escalas caso a função exista lá
->>>>>>> 06d4642249e995a45a92a213d9e7b5c545b268af
     if (typeof applyThemeToBody === "function") applyThemeToBody(index);
     if (typeof drawShapes === "function") drawShapes();
 }
 
-<<<<<<< HEAD
+// Inicialização: Lê o tema salvo ou usa o 0/2 como padrão
 const savedTheme = localStorage.getItem('appTheme');
 const initialTheme = savedTheme !== null ? parseInt(savedTheme) : 0;
-=======
-// Inicialização: Lê o tema salvo ou usa o 2 (Pine/Forest) como padrão
-const savedTheme = localStorage.getItem('appTheme');
-const initialTheme = savedTheme !== null ? parseInt(savedTheme) : 0; // Use 0 para o tema padrão do metrônomo, 2 para o tema da escala
->>>>>>> 06d4642249e995a45a92a213d9e7b5c545b268af
 changeTheme(initialTheme);
 
 // --- TRANSLATION SYSTEM (i18n) ---
@@ -48,11 +39,8 @@ const translations = {
         "metro_desc": "Gerador polirrítmico visual com batidas personalizáveis.",
         "scale_title": "Máquina de Escalas",
         "scale_desc": "Gerador e visualizador de escalas aleatórias.",
-<<<<<<< HEAD
         "tab_title": "Tab Player",
         "tab_desc": "Leitor de tablatura com loop, metrônomo e transposição.",
-=======
->>>>>>> 06d4642249e995a45a92a213d9e7b5c545b268af
         "open_tool": "ABRIR FERRAMENTA",
         "poly_title": "Metrônomo Polirrítmico",
         "main_beat": "Batida Princ.",
@@ -81,11 +69,8 @@ const translations = {
         "metro_desc": "Visual polyrhythmic generator with customizable beats.",
         "scale_title": "Scale Machine",
         "scale_desc": "Random scale generator and visualizer.",
-<<<<<<< HEAD
         "tab_title": "Tab Player",
         "tab_desc": "Tab reader with loop, metronome & transposition.",
-=======
->>>>>>> 06d4642249e995a45a92a213d9e7b5c545b268af
         "open_tool": "OPEN TOOL",
         "poly_title": "Polyrhythm Metronome",
         "main_beat": "MainBeat",
@@ -122,18 +107,12 @@ function applyTranslations() {
         const key = el.getAttribute('data-i18n');
         if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
     });
-<<<<<<< HEAD
-=======
 
->>>>>>> 06d4642249e995a45a92a213d9e7b5c545b268af
     document.querySelectorAll('[data-i18n-title]').forEach(el => {
         const key = el.getAttribute('data-i18n-title');
         if (translations[currentLang][key]) el.title = translations[currentLang][key];
     });
-<<<<<<< HEAD
-=======
 
->>>>>>> 06d4642249e995a45a92a213d9e7b5c545b268af
     document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
     const activeFlag = document.getElementById('flag-' + currentLang);
     if (activeFlag) activeFlag.classList.add('active');
